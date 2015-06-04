@@ -16,6 +16,9 @@ vector<unsigned char> readFile(ifstream &inputFile)
 
 int main(int argc, const char * argv[])
 {
+	string wav = "WAVE";
+	string tmp = "";
+	tmp.reserve(4);
 	if (argc < 3)
 	{
 		cout << "Error: Too few arguments." << endl;
@@ -38,7 +41,17 @@ int main(int argc, const char * argv[])
     
 	vector<unsigned char> wavBytes = readFile(wavFile);
 	vector<unsigned char> txtBytes = readFile(txtFile);
-	
+
+	for (int i = 8; i < 12; i++)
+	{
+		tmp += wavBytes[i];
+	}
+	if (tmp != wav)
+	{
+		cout << "It's not wav file! ;(";
+		return 0;
+	}
+
 	if (wavBytes.size() - 44 < txtBytes.size() * 8)
 	{
 		cout << "Error: Wav file capasity is too low." << endl;
